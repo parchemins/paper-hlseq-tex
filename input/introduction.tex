@@ -1,0 +1,73 @@
+
+\section{Introduction}
+
+Distributed collaborative editors allow to distribute the work across space,
+time and organization. Some trending editors such as Google
+Docs~\cite{nichols1995high} use the Operational Transform
+approach~\cite{sun1998operational,sun1998achieving}. However, an alternative
+exists based on Conflict-free Replicated Data
+Types~\cite{shapiro2011comprehensive,shapiro2011conflict}.  Compared to OT,
+CRDTs are more decentralized and scale better.
+
+The CRDTs belong to the optimistic
+replication~\cite{saito2002replication,saito2005optimistic}
+approach. Therefore, replicas involved in the collaboration are guaranteed of
+eventually converging to an identical state. To provide convergence in a
+replicated sequence, CRDTs use unique identifiers to link elements. When the
+sequence is a document, the elements can be characters, lines, paragraphs, etc.
+
+
+Currently, we distinguish two types of sequence CRDTs:
+\begin{inparaenum}[(i)]
+\item The tombstone
+  CRDTs~\cite{ahmed2011evaluating,grishchenko2010deep,oster2006data,preguica2009commutative,roh2011replicated,weiss2007wooki,Yu2012stringwise}
+  use fixed-size identifiers. However, the delete operations only mark and hide
+  elements to the users. As a consequence, these deleted elements permanently
+  affect performances.
+\item The variable-size identifiers
+  CRDTs~\cite{preguica2009commutative,weiss2009logoot} directly encode the
+  order relation in the identifiers. However, their identifiers can grow
+  linearly depending on the editing behaviour. Consequently, they remain unsafe
+  in the distributed collaborative editing context.
+\end{inparaenum}
+
+To overcome their respective issues, these approaches need an additional
+protocol~\cite{letia2009crdts,roh2011replicated} related to garbage collection
+mechanisms. Nevertheless, these protocols require global knowledge over
+participants. Such knowledge remains prohibitively expensive in the context of
+distributed network subject to churn without making strong assumptions.
+
+Recently, LSEQ~\cite{nedelec2013lseq} allowed variable-size identifiers CRDTs
+to get rid of this costly additional protocol by decreasing their space
+complexity from linear to sub-linearly upper-bounded. Yet, LSEQ does not
+guarantee a safe allocation. Indeed, it uses multiple antagonist strategies
+which, without any coordination between collaborators, leads to an exponential
+growth of identifiers.
+
+The contributions of this paper include:
+\begin{inparaenum}[(i)]
+\item experiments that highlight the negative effect of multiple users edition
+  on the size of LSEQ identifiers
+\item experiments that highlight that an increasing latency does not have a
+  negative impact on the size of LSEQ identifiers.
+\item an improvement of LSEQ called \NAME{} that extends the single user
+  sub-linear upper-bound on space complexity to any number of users, regardless
+  of the latency, and without any additional cost.
+\end{inparaenum} 
+
+Ultimately, \NAME{} allows distributed collaborative editors to safely use
+variable-size identifiers CRDTs.
+
+Section~\ref{sec:background} details variable-size identifiers CRDTs for
+sequences and the allocation strategy LSEQ. It also highlights the motivation
+of this paper.  Section~\ref{sec:proposal} presents \NAME{} that combines LSEQ
+and a hash strategy choice to overcome the LSEQ limitations.
+Section~\ref{sec:experiments} shows the results of experiments over LSEQ and
+\NAME{} including latency and multiple users. Finally,
+Section~\ref{sec:relatedwork} reviews related works.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../dchanges"
+%%% End: 

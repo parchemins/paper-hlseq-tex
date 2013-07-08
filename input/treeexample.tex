@@ -1,0 +1,40 @@
+\begin{tikzpicture}[scale=1.0]
+\tiny
+
+  
+  \draw (0,0) -- node[anchor=south east]{0}  (-85pt, -50pt);
+  \draw (0,0) -- node[anchor=south west]{99} ( 85pt, -50pt);
+
+  \draw (0,0) -- node[anchor=east]{20} (-60pt, -50pt);
+  \draw (0,0) -- node[anchor=east]{21} (-20pt, -50pt);
+  \draw (0,0) -- node[anchor=east]{50} ( 30pt, -50pt);
+
+  \draw[fill=white] (0,0) circle (1pt);
+
+  \draw[<->,color=red] (32pt,-50pt) -- node[anchor=north]{(1)} (83pt, -50pt);
+
+
+\small
+  \draw[fill=white] (-85pt, -50pt) node[anchor=north]{Begin} circle (1pt);
+  \draw[fill=white] ( 85pt, -50pt) node[anchor=north]{End} circle (1pt);
+
+\tiny
+  \draw (-60pt,-50pt) -- node[anchor=east]{10} (-50pt, -100pt);
+  \draw (-60pt,-50pt) -- node[anchor=west]{11} (-40pt, -100pt);
+
+  \draw[<->,color=red] (-48pt,-100pt) -- node[anchor=north]{(2)} (-42pt,
+  -100pt);
+
+\small
+  \draw[fill=black] (-60pt, -50pt) circle (1pt);
+  \draw[fill=black] (-20pt, -50pt) circle (1pt);
+  \draw[fill=black] ( 30pt, -50pt) circle (1pt);
+
+  \filldraw[black](-50pt, -100pt) circle (1pt);
+%  \filldraw[black] (-30.8pt, -100pt) node[anchor=north]{23} circle (1pt);
+  \filldraw[black](-40pt, -100pt) circle (1pt);
+%  \filldraw[black] (-12.0pt, -100pt) node[anchor=north]{70} circle (1pt);
+%  \filldraw[black](- 3.2pt, -100pt) circle (1pt);
+
+
+\end{tikzpicture}

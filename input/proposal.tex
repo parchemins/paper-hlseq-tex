@@ -1,0 +1,111 @@
+
+\section{h-LSEQ}
+\label{sec:proposal}
+
+The \NAME{} allocation strategy is based on LSEQ excepting the strategy choice
+component. Using LSEQ, each replica involved in the collaboration makes
+independent random choices. However, Section~\ref{sec:background} showed that
+such strategy fails to provide sub-linearly upper-bounded identifiers in
+collaboration involving multiple users.
+
+The solution is to reach a global agreement over replicas on which is the
+allocation strategy used at each depth of the underlying tree model. Since LSEQ
+aims to get rid of protocols related to garbage collecting mechanisms, any
+solution requiring additional communication is inconceivable.
+
+We propose to use a hash strategy choice component which have the same local
+behaviour than the original random strategy choice. Also, it provides the
+required implicit global agreement. Indeed, instead of synchronizing the set of
+users, we provide an \emph{a priori} agreement by the mean of the hash
+function. This agreement cancels the possibility of antagonist choices which
+would have led to a bad global allocation of identifiers. Furthermore, it does
+not introduce any additional cost to LSEQ.
+
+\input{input/hashalgo.tex}
+
+Algorithm~\ref{algo:hashstrategychoice} details the \NAME{} allocation
+strategy. The changes over LSEQ are simply highlighted. This section explains
+and refers to this algorithm when required. Extracted
+from~\cite{nedelec2013lseq}, the \emph{prefix} function return a copy of the
+identifier $id$, i.e., a series of numbers truncated at $depth$ or increased
+until $depth$. The function carefully encodes each number of this copy in a
+base depending on its depth in order to directly apply the arithmetic
+operations of line~\ref{line:add} and line~\ref{line:sub}. For instance,
+assuming that the departure base is $2^5$, a call to $prefix([13.42.37],2)$
+encodes $[13.42]$ using $5+6$ bits.
+
+The functions $boundary+$ and $boundary-$ are two allocation strategies
+nevertheless they do not strictly respect the $alloc$ function signature
+in order to factorize the computation of $depth$ and $step$.
+
+
+\subsection{Locally}
+
+The strategy choice function is surjective and its signature is: $h(depth \in
+\mathbb{N}^*):\mathbb{N}$. The returned value corresponds to an allocation
+strategy unique identifier. The algorithm of the allocation strategy \NAME{}
+follows 3 steps:
+\begin{enumerate}
+\item lines~\ref{line:beginDepth}-\ref{line:endDepth}: computes the depth of
+  the future identifiers to allocate
+\item line~\ref{line:hash}: calls the strategy choice function $h$ using the
+  depth
+\item line~\ref{line:invoke}: calls the allocation strategy using the
+  identifier returned by $h$
+\end{enumerate}
+
+The strategy choice function returns strategy identifiers following a uniform
+law. Thus, frequencies of appearance of each strategy are equal and does not
+favor any editing behaviour. Furthermore, the unpredictability due to
+randomness preserves the model from intentional and malicious attacks.
+
+The hash function fulfills the requirement of the strategy choice function $h$.
+However, contrarily to the random strategy choice component, it requires
+an initialization. Indeed, the creator of the document must share a hidden
+seed (cf. line~\ref{line:seed}) within the document that each collaborator
+will use to generate the hash function specific to this document. In
+Algorithm~\ref{algo:hashstrategychoice} at line~\ref{line:random}, we simply
+use the common random function initialized with the seed and the depth.
+
+\subsection{Remotely}
+
+Each collaborator generates the same hash function thanks to the shared
+seed. Also, all collaborators use the same mapping $id\rightarrow
+allocation\,strategy$ (cf. line~\ref{line:strategy}). Consequently, all hash
+functions map the same depth to the same allocation strategies. The idea is to
+reach a consensus on which strategies to employ in order to avoid the waste of
+identifier space when two users choose antagonist strategies.
+
+\begin{figure}[h]
+\begin{center}
+\input{input/hashexample.tex}
+\caption{Representation of the underlying exponential tree model of LSEQ and
+  \NAME{}. Two collaborators insert two elements at the end of the document in
+  order to get the sequence ``abcd''. On the random side, the collaborators
+  employ antagonist strategies. On the hash side, the collaborators use the
+  same allocation strategy. Both sides draw the same random numbers.}
+\label{fig:hashexample}
+\end{center}
+\end{figure}
+
+Figure~\ref{fig:hashexample} highlights the differences between the original
+random strategy choice and our hash strategy choice. Both cases present two
+collaborators inserting 2 elements one after the other. The expected result is
+the sequence ``abcd''. Hence, Collaborator 1 generates the ``a'' and ``c'' and
+Collaborator 2 generates the ``b'' and ``d''. In both cases they draw the
+same numbers. However, in the case of random strategy choice, one collaborator
+randomly chooses \emph{boundary+} twice while the other randomly chooses
+\emph{boundary--} twice. When the editing behaviour is monotonic, the size of
+identifiers quickly grows. On the opposite, the collaborators using \NAME{}
+implicitly agree on using \emph{boundary+} at depth-1, consequently the
+allocation follows the properties of one user edition presented
+in~\cite{nedelec2013lseq}.
+
+The next section aims to corroborate our assumptions by performing experiments
+on different numbers of collaborators and by varying the latency of the
+network.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../dchanges"
+%%% End: 

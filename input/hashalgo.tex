@@ -1,0 +1,77 @@
+%%%%%%% CHOOSE THE POSITION IN DENSE SPACE MANG %%%%%%%%
+\begin{algorithm}[h]
+\small
+\algrenewcommand{\algorithmiccomment}[1]{\hskip2em$\rhd$ #1}
+
+  \begin{algorithmic}[1]
+  \State \textbf{let} $boundary := 10$ \Comment{Any constant}
+  \State \colorbox{yellow}{\textbf{let} $seed := 123456789$ 
+    \Comment{Init with document}} \label{line:seed}
+  \State \colorbox{yellow}{\textbf{let} $\mathcal{S} := \{ \langle 0, boundary+\rangle,
+  \langle 1, boundary-\rangle \}$;} \label{line:strategy}
+  \State  \Comment{\colorbox{yellow}{map<id, allocation strategy>}}
+  \State
+    \Function{alloc}{p, q $\in \mathcal{I}$}
+    
+      \State \textbf{let} $depth := 0$; $interval :=0$;
+
+      \While{$(interval < 1)$} \Comment{Not enough for 1 insert} 
+      \label{line:beginDepth}
+        \State $depth++$;
+        \State $interval := prefix(q,depth) - prefix(p,depth) -1$;
+      \EndWhile \label{line:endDepth}
+      
+      \State \textbf{let} $step:=min(boundary,interval)$; \Comment{Process the
+        maximum step to stay between $p$ and $q$}
+
+      \State \colorbox{yellow} {\textbf{let} $idStrat :=
+        h(depth)$;} \label{line:hash}
+      \State \Comment{Call the hash function}
+      \State \colorbox{yellow} {\textbf{let} $id :=
+      \mathcal{S}.get(idStrat).invoke(p,q,depth,step)$;} \label{line:invoke}
+      \State \Comment{Call the allocation strategy according to hash}
+      \State \textbf{return} $id$;
+    \EndFunction
+    
+    \State
+    
+    \Function{\colorbox{yellow}{h}}{\colorbox{yellow}{depth $\in 
+        \mathbb{N}^*$}}
+    \State \colorbox{yellow}{\textbf{return} 
+      $Random(seed * depth).nextInt(0,1)$;} \label{line:random}
+    \EndFunction
+
+    \State
+
+    \Function{boundary+}{p, q $\in \mathcal{I}$, depth, step $\in
+      \mathbb{N}^*$} 
+      \State \textbf{let} $addVal := RandInt(0,step)+1$;
+      \State \textbf{return} $prefix(p,depth) + addVal$; \label{line:add}
+    \EndFunction
+    \State
+
+    \Function{boundary--}{p, q $\in \mathcal{I}$, depth, step $\in
+      \mathbb{N}^*$}
+      \State \textbf{let} $subVal := RandInt(0,step)+1$;
+      \State \textbf{return} $prefix(q,depth) - subVal$; \label{line:sub}
+    \EndFunction
+
+    \State
+
+    \Function{prefix}{id $\in \mathcal{I}$, depth $\in \mathbb{N}^*$}
+      \State \textbf{let} $idCopy := [\ ]$;
+      \For{($cpt:=1$ to $depth$)}
+        \If{($cpt<id.size$)} \Comment{Copy the value}
+          \State $idCopy := idCopy.append(id.at(cpt))$;
+          \Else \Comment{Add 0 encoded in the right base}
+          \State $idCopy := idCopy.append(0_{base(cpt)})$; \label{line:base}
+        \EndIf
+      \EndFor
+      \State \Return $idCopy$;
+    \EndFunction
+
+  \end{algorithmic}
+\caption{\NAME{} allocation function}
+\label{algo:hashstrategychoice}
+
+\end{algorithm}

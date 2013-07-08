@@ -1,0 +1,35 @@
+
+\section{Conclusion}
+
+In this paper, we presented an improvement of the allocation strategy LSEQ
+called \NAME{}. Contrarily to the original approach, our configuration supports
+multiple users regardless of the latency. Indeed, replacing the random strategy
+choice by the hash strategy choice allows to reach a global sub-linear
+upper-bound on space complexity. As a consequence, distributed collaborative
+editors can safely use \NAME{} and show better scalability criteria than
+current trending editors such as Google Docs, Etherpad, etc.
+
+The hash strategy choice is a common function over participants that maps a
+depth in the underlying tree to an allocation strategy identifier. This
+surjective function initialized with a shared seed allows to reach an agreement
+on strategies with no additional synchronization. Consequently, there is no
+loss in the identifier space due to antagonist allocation strategies.
+
+This paper highlights the importance of multiple users analysis in CRDTs for
+sequences, particularly in the case of multiple underlying allocation
+strategies. We also showed that latency does not badly affect the size of
+identifiers in variable-size identifiers CRDTs. However, we performed
+experiments with synthetic documents in order to show the general behaviour of
+the allocation without considering semantically consistent documents.
+
+Future works include the formal proof of the sub-linear upper-bound on space
+complexity of \NAME{}. A probability analysis of the worst-case scenario is
+mandatory to show that it seldom happens. We plan to experiment \NAME{} on a
+corpus of real documents including multiple collaborators and
+concurrency. Finally, we aim to build a real distributed collaborative editor
+based on a variable-size identifiers CRDT using \NAME{} as allocation strategy.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../dchanges"
+%%% End: 

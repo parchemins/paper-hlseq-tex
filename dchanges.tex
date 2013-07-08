@@ -1,0 +1,97 @@
+
+\documentclass{sig-alternate}
+
+\usepackage{url}
+\usepackage[english,french]{babel}
+\usepackage[utf8]{inputenc}
+%%\usepackage[T1]{fontenc}
+\usepackage{algorithm}
+\usepackage{paralist}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+%%\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{hyperref}                                  
+\usepackage{multirow}
+%%\usepackage{multicol}
+%\usepackage{todonotes}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+
+%%\usepackage{amsthm}
+
+%% Bibtex
+\usepackage[numbers]{natbib}
+
+\usepackage{tikz}
+\usetikzlibrary{plotmarks,shapes}
+%%\usepackage{geometry}
+
+%\usepackage{subfigure}
+\usepackage{subcaption}
+%\usepackage[small]{caption}
+
+%%\geometry{vmargin=1.5cm, hmargin=1.0cm}
+
+\newcommand{\TOFIX}[1]{\textcolor{orange}{#1}}
+\newcommand{\TODO}[1]{\textcolor{red}{#1}}
+\newcommand{\ELEM}[1]{\textcolor{blue}{#1}}
+\newcommand{\NAME}[0]{\textit{h}-LSEQ}
+
+%paralist
+\renewcommand*\descriptionlabel[1]{%
+\scshape #1}
+\renewcommand\paradescriptionlabel[1]{%
+\scshape #1}
+
+
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+
+\title{Concurrency Effects Over Variable-size Identifiers in Distributed
+  Collaborative Editing}
+
+
+\numberofauthors{1}
+\author{
+     \alignauthor Brice Nedelec, Pascal Molli, Achour Mostefaoui, Emmanuel Desmontils\\
+     \affaddr{LINA, 2 rue de la Houssini\`ere}\\
+     \affaddr{BP92208, 44322 Nantes Cedex 03}\\
+     \email{first.last@univ-nantes.fr}
+}
+
+\date{}
+
+%%\input{input/data/indexdata.tex}
+
+\begin{document}
+\newtheorem{Def}{Definition}
+
+\selectlanguage{english}
+
+  \maketitle
+
+  \input{input/abstract.tex}
+  \input{input/introduction.tex}
+  \input{input/background.tex}
+  \input{input/proposal.tex}
+  \input{input/experiments.tex}
+  \input{input/relatedwork.tex}
+  \input{input/conclusion.tex}
+
+%% Bibliographie
+%  \newpage
+  \bibliographystyle{plainnat}
+  \bibliography{bibliographie}
+  \addcontentsline{toc}{chapter}{Bibliographie} 
+%  \nocite{*}
+  \clearpage
+  
+\end{document}

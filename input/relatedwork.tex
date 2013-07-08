@@ -1,0 +1,81 @@
+
+\section{Related Work}
+\label{sec:relatedwork}
+Current distributed collaborative editors uses optimistic
+replication~\cite{saito2002replication,saito2005optimistic} to provide
+availability of data at a consistency cost. Optimistic replication designs
+operation in two phases. First a replica prepares the result of an operation
+and then broadcasts it to other collaborators. Second, remote replicas
+integrat the newly received data.
+
+Operational Transform approach (OT) and Conflict-free Replicated Data Type
+approach (CRDT) belong to the optimistic class of replication. While CRDTs
+share the computational cost of operations between the local and remote parts
+of the replication protocol, the OT approaches prefer to offer free local
+generation and pay an additional cost on integration of remote operations.
+Since the number of remote operations exponentially grows when the number of
+collaborators increases, the CRDTs scale better than OT approaches.
+
+
+We distinguish two classes of CRDTs for sequences. The tombstone based CRDT
+approaches use death certificate on removed elements. Henceforth, these
+elements are hidden to the users, but still remain in the underlying model and
+undermine the performance. For instance, the number of tombstones in popular or
+controversial pages in Wikipedia pages would be very high due to vandalism and
+recoveries. The representatives of this class of CRDTs are
+WOOT~\cite{oster2006data}, WOOTO~\cite{weiss2007wooki},
+WOOTH~\cite{ahmed2011evaluating}, CT~\cite{grishchenko2010deep},
+Treedoc~\cite{preguica2009commutative}, RGA~\cite{roh2011replicated} and 
+\cite{Yu2012stringwise}.
+
+To get rid of these marked elements, the tombstone based CRDTs require
+additional protocols related to garbage collecting
+mechanisms. In~\cite{letia2009crdts,roh2011replicated} they propose approaches
+to safely purge the tombstones. However, it requires a global knowledge over
+collaborators.  In~\cite{roh2011replicated}, they describe an approach that
+obtains the global knowledge by maintaining a vector clock with one entry per
+participant although it is too costly in large distributed network where
+collaborators can enter and leave the system. In~\cite{letia2009crdts}, they
+describe the \emph{core nebula} approach that permits to reach the consensus
+over participants. However, this approach constrains the network topology to
+make the consensus reachable and uses a costly catch up protocol.
+
+The alternative to tombstones is the variable-size identifiers CRDT
+approach. These CRDTs directly encode the total order of elements into their
+unique identifiers. Thus, they do not require tombstones however the
+identifiers can grow. In Logoot~\cite{weiss2009logoot} and
+Treedoc~\cite{preguica2009commutative}, identifiers have a linear space
+complexity compared to the number of insert operations. Furthermore, their size
+heavily depends on the position of insertions. For example, performing
+insertions repetitively at the beginning of a document leads to identifiers
+with a size equals to the number of insert operations. Consequently, such
+approaches require an additional re-balance protocol, like tombstone CRDTs.
+However their underlying allocation strategies can be replaced by
+LSEQ~\cite{nedelec2013lseq} that provides a sub-linear upper-bound on the space
+complexity regardless of the editing behaviour.
+
+The LSEQ approach uses two antagonist allocation strategies. However, while
+paper~\cite{ahmed2011evaluating} argues about the importance of concurrency in
+CRDTs experiments, the original paper of LSEQ does not consider this aspect. In
+this paper, we showed on synthetic documents that its original configuration
+does not scale in the number of users. The added value of synthetic documents
+over real collaborative documents is the total flexibility on their parameters,
+especially on the editing behaviour. Indeed, the number of available real
+collaborative documents (including concurrency) is very limited. Moreover, such
+experiments are costly to set up, and often biased by the nature of the task to
+perform.
+
+
+In this paper, we propose to replace the random strategy choice component of
+LSEQ by a hash strategy choice component to reach an implicit consensus on
+which strategy to employ. This configuration called \NAME{} does not require
+additional computation and extends the sub-linear complexities of LSEQ from a
+single user to multiple collaborators regardless of the latency. Thus, \NAME{}
+constitutes a safe allocation strategy for sequences CRDTs, even in cases
+including concurrency.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../dchanges"
+%%% End: 
