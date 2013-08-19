@@ -1,19 +1,19 @@
 
 \section{Related Work}
 \label{sec:relatedwork}
-Current distributed collaborative editors uses optimistic
+Current distributed collaborative editors use optimistic
 replication~\cite{saito2002replication,saito2005optimistic} to provide
 availability of data at a consistency cost. Optimistic replication designs
-operation in two phases. First a replica prepares the result of an operation
+operations in two phases. First a replica prepares the result of an operation
 and then broadcasts it to other collaborators. Second, remote replicas
-integrat the newly received data.
+integrate the newly received data.
 
 Operational Transform approach (OT) and Conflict-free Replicated Data Type
 approach (CRDT) belong to the optimistic class of replication. While CRDTs
 share the computational cost of operations between the local and remote parts
 of the replication protocol, the OT approaches prefer to offer free local
-generation and pay an additional cost on integration of remote operations.
-Since the number of remote operations exponentially grows when the number of
+generation and pay an additional cost on the integration of remote operations.
+Since the number of remote operations quadratically grows when the number of
 collaborators increases, the CRDTs scale better than OT approaches.
 
 
@@ -42,7 +42,7 @@ make the consensus reachable and uses a costly catch up protocol.
 
 The alternative to tombstones is the variable-size identifiers CRDT
 approach. These CRDTs directly encode the total order of elements into their
-unique identifiers. Thus, they do not require tombstones however the
+unique identifiers. Thus, they do not require tombstones. However, the
 identifiers can grow. In Logoot~\cite{weiss2009logoot} and
 Treedoc~\cite{preguica2009commutative}, identifiers have a linear space
 complexity compared to the number of insert operations. Furthermore, their size
@@ -50,11 +50,11 @@ heavily depends on the position of insertions. For example, performing
 insertions repetitively at the beginning of a document leads to identifiers
 with a size equals to the number of insert operations. Consequently, such
 approaches require an additional re-balance protocol, like tombstone CRDTs.
-However their underlying allocation strategies can be replaced by
+However, their underlying allocation strategies can be replaced by
 LSEQ~\cite{nedelec2013lseq} that provides a sub-linear upper-bound on the space
 complexity regardless of the editing behaviour.
 
-The LSEQ approach uses two antagonist allocation strategies. However, while
+The LSEQ approach uses two antagonist allocation strategies. Although
 paper~\cite{ahmed2011evaluating} argues about the importance of concurrency in
 CRDTs experiments, the original paper of LSEQ does not consider this aspect. In
 this paper, we showed on synthetic documents that its original configuration
@@ -67,12 +67,12 @@ perform.
 
 
 In this paper, we propose to replace the random strategy choice component of
-LSEQ by a hash strategy choice component to reach an implicit consensus on
-which strategy to employ. This configuration called \NAME{} does not require
-additional computation and extends the sub-linear complexities of LSEQ from a
-single user to multiple collaborators regardless of the latency. Thus, \NAME{}
-constitutes a safe allocation strategy for sequences CRDTs, even in cases
-including concurrency.
+LSEQ by a hash-based choice strategy to reach an implicit consensus on which
+strategy to employ. This configuration called \NAME{}, does not require
+additional computation and extends the sub-linear complexity bound of LSEQ from
+a single user to multiple collaborators regardless of the latency. Thus,
+\NAME{} constitutes a safe allocation strategy for sequences CRDTs, even in
+concurrent cases.
 
 
 %%% Local Variables: 

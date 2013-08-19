@@ -2,22 +2,23 @@
 \section{h-LSEQ}
 \label{sec:proposal}
 
-The \NAME{} allocation strategy is based on LSEQ excepting the strategy choice
-component. Using LSEQ, each replica involved in the collaboration makes
-independent random choices. However, Section~\ref{sec:background} showed that
-such strategy fails to provide sub-linearly upper-bounded identifiers in
-collaboration involving multiple users.
+The \NAME{} allocation strategy is mainly based on LSEQ, they differ in the
+strategy choice component. Using LSEQ, each replica involved in the
+collaboration makes independent random choices. However,
+Section~\ref{sec:background} showed that such strategy fails to provide
+sub-linearly upper-bounded identifiers in collaboration involving multiple
+users.
 
 The solution is to reach a global agreement over replicas on which is the
 allocation strategy used at each depth of the underlying tree model. Since LSEQ
 aims to get rid of protocols related to garbage collecting mechanisms, any
-solution requiring additional communication is inconceivable.
+solution that requires additional communication is inconceivable.
 
 We propose to use a hash strategy choice component which have the same local
-behaviour than the original random strategy choice. Also, it provides the
+behaviour than the original random strategy choice, but it also provides the
 required implicit global agreement. Indeed, instead of synchronizing the set of
-users, we provide an \emph{a priori} agreement by the mean of the hash
-function. This agreement cancels the possibility of antagonist choices which
+users, we provide an \emph{a priori} agreement by the mean of a hash
+function. This agreement avoids the possibility of antagonist choices which
 would have led to a bad global allocation of identifiers. Furthermore, it does
 not introduce any additional cost to LSEQ.
 
@@ -25,18 +26,17 @@ not introduce any additional cost to LSEQ.
 
 Algorithm~\ref{algo:hashstrategychoice} details the \NAME{} allocation
 strategy. The changes over LSEQ are simply highlighted. This section explains
-and refers to this algorithm when required. Extracted
-from~\cite{nedelec2013lseq}, the \emph{prefix} function return a copy of the
-identifier $id$, i.e., a series of numbers truncated at $depth$ or increased
-until $depth$. The function carefully encodes each number of this copy in a
-base depending on its depth in order to directly apply the arithmetic
-operations of line~\ref{line:add} and line~\ref{line:sub}. For instance,
-assuming that the departure base is $2^5$, a call to $prefix([13.42.37],2)$
-encodes $[13.42]$ using $5+6$ bits.
+this algorithm. Extracted from~\cite{nedelec2013lseq}, the \emph{prefix}
+function return a copy of the identifier $id$, i.e., a series of numbers
+truncated at $depth$ or increased until $depth$. The function carefully encodes
+each number of this copy in a base depending on its depth in order to directly
+apply the arithmetic operations of line~\ref{line:add} and
+line~\ref{line:sub}. For instance, assuming that the departure base is $2^5$, a
+call to $prefix([13.42.37],2)$ encodes $[13.42]$ using $5+6$ bits.
 
-The functions $boundary+$ and $boundary-$ are two allocation strategies
-nevertheless they do not strictly respect the $alloc$ function signature
-in order to factorize the computation of $depth$ and $step$.
+The functions $boundary+$ and $boundary-$ are two allocation strategies, note
+that they do not strictly respect the $alloc$ function signature in order to
+factorize the computation of $depth$ and $step$.
 
 
 \subsection{Locally}
@@ -74,7 +74,7 @@ seed. Also, all collaborators use the same mapping $id\rightarrow
 allocation\,strategy$ (cf. line~\ref{line:strategy}). Consequently, all hash
 functions map the same depth to the same allocation strategies. The idea is to
 reach a consensus on which strategies to employ in order to avoid the waste of
-identifier space when two users choose antagonist strategies.
+identifiers' space due to the choice of antagonist strategies.
 
 \begin{figure}[h]
 \begin{center}
@@ -98,12 +98,12 @@ randomly chooses \emph{boundary+} twice while the other randomly chooses
 \emph{boundary--} twice. When the editing behaviour is monotonic, the size of
 identifiers quickly grows. On the opposite, the collaborators using \NAME{}
 implicitly agree on using \emph{boundary+} at depth-1, consequently the
-allocation follows the properties of one user edition presented
+allocation follows the properties of the one user edition presented
 in~\cite{nedelec2013lseq}.
 
 The next section aims to corroborate our assumptions by performing experiments
-on different numbers of collaborators and by varying the latency of the
-network.
+on different setups with varying the number of collaborators and the latency of
+the network.
 
 %%% Local Variables: 
 %%% mode: latex

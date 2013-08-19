@@ -4,16 +4,16 @@
 In this paper, we presented an improvement of the allocation strategy LSEQ
 called \NAME{}. Contrarily to the original approach, our configuration supports
 multiple users regardless of the latency. Indeed, replacing the random strategy
-choice by the hash strategy choice allows to reach a global sub-linear
+choice by the hash-based choice strategy allows to reach a global sub-linear
 upper-bound on space complexity. As a consequence, distributed collaborative
-editors can safely use \NAME{} and show better scalability criteria than
-current trending editors such as Google Docs, Etherpad, etc.
+editors can safely use \NAME{} and show better scalability than current
+trending editors such as Google Docs, Etherpad, etc.
 
-The hash strategy choice is a common function over participants that maps a
-depth in the underlying tree to an allocation strategy identifier. This
+The hash-based choice strategy is a common function over participants that maps
+a depth in the underlying tree to an allocation strategy identifier. This
 surjective function initialized with a shared seed allows to reach an agreement
-on strategies with no additional synchronization. Consequently, there is no
-loss in the identifier space due to antagonist allocation strategies.
+on strategies with no additional synchronization cost. Consequently, there is
+no loss in the identifiers' space due to antagonist allocation strategies.
 
 This paper highlights the importance of multiple users analysis in CRDTs for
 sequences, particularly in the case of multiple underlying allocation
