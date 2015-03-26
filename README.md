@@ -1,11 +1,11 @@
-Papers 2013
-===========
+# Concurrency Effects Over Variable-size Identifiers in Distributed Collaborative Editing
 
-Contains all papers in branches. A branch suffixed by a "s" letter refers to
-the submission version of the paper. The master branch tracks current work.
+<i>Keywords: Distributed Documents; Document Authoring Tools and Systems;
+Distributed Collaborative Editing; Real-time Editing; Conflict-free Replicated
+Data Types</i>
 
-DChanges2013
-------------
+<i>Authors: Brice Nédelec, Pascal Molli, Achour Mostefaoui, Emmanuel
+Desmontils</i>
 
 Distributed collaborative editors such as Google Docs or Etherpad allow to
 distribute the work across time, space and organizations. In this paper, we
@@ -25,23 +25,32 @@ improvement allows to safely build distributed collaborative editors based on
 CRDTs. We validate our approach with simulations involving latency and multiple
 users.
 
-DocEng2013
-----------
+## Available at
 
-Distributed collaborative editing systems allow users to work distributed in
-time, space and across organizations. Trending distributed collaborative
-editors such as Google Docs, Etherpad or Git have grown in popularity over the
-years. A new kind of distributed editors based on a family of distributed data
-structure replicated on several sites called Conflict-free Replicated Data Type
-(CRDT for short) appeared recently. This paper considers a CRDT that represents
-a distributed sequence of basic elements that can be lines, words or characters
-(sequence CRDT). The possible operations on this sequence are the insertion and
-the deletion of elements. Compared to the state of the art, this approach is
-more decentralized and better scales in terms of the number of
-participants. However, its space complexity is linear with respect to the total
-number of inserts and the insertion points in the document. This makes the
-overall performance of such editors dependent on the editing behaviour of
-users. This paper proposes and models LSEQ, an adaptive allocation strategy
-for a sequence CRDT. LSEQ achieves in the average a sub-linear
-spatial-complexity whatever is the editing behaviour. A series of experiments
-validates LSEQ showing that it outperforms existing approaches.
+<ul>
+  <li> [HAL](https://hal.archives-ouvertes.fr/hal-00921655)
+</ul>
+
+## Bibtex
+
+```
+@inproceedings{nedelec:hal-00921655,
+  TITLE = {{Concurrency Effects Over Variable-size Identifiers in Distributed
+            Collaborative Editing}},
+  AUTHOR = {N{\'e}delec, Brice and Molli, Pascal and Mostefaoui, Achour and
+            Desmontils, Emmanuel},
+  URL = {https://hal.archives-ouvertes.fr/hal-00921655},
+  NOTE = {7 pages},
+  BOOKTITLE = {{Document Changes: Modeling, Detection, Storage and
+                Visualization}},
+  ADDRESS = {Florence, Italy},
+  SERIES = {CEUR Workshop Proceedings},
+  VOLUME = {1008},
+  PAGES = {0--7},
+  YEAR = {2013},
+  MONTH = Sep,
+  KEYWORDS = {Distributed Documents ; Document Authoring Tools and Systems ;
+              Distributed Collaborative Editing ; Real-time Editing ;
+              Conflict-free Replicated Data Types}
+}
+```
