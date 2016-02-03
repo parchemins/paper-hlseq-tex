@@ -31,7 +31,7 @@ users.
   <li> [HAL](https://hal.archives-ouvertes.fr/hal-00921655)
 </ul>
 
-## Bibtex
+## BibTeX
 
 ```
 @inproceedings{nedelec:hal-00921655,
@@ -54,3 +54,8 @@ users.
               Conflict-free Replicated Data Types}
 }
 ```
+
+## Acknowledgments
+
+This work was partially funded by the French ANR project ConcoRDanT
+([ANR-10-BLAN-0208](http://www.agence-nationale-recherche.fr/?Projet=ANR-10-BLAN-0208)).
